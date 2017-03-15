@@ -11,8 +11,8 @@ let out = tmp.fileSync()
 process.stdin.pipe(concat(config=>{
 	let configObj = JSON.parse(config)
 
-	let user = Buffer.from(yaml.safeDump(configObj.user || {}))
-	let meta = Buffer.from(yaml.safeDump(configObj.meta || {}))
+	let user = Buffer.from("#cloud-config\n" + yaml.safeDump(configObj.user || {}))
+	let meta = Buffer.from("#cloud-config\n" + yaml.safeDump(configObj.meta || {}))
 
 	fat.entry({name:'user-data', size:user.length}, user)
 	fat.entry({name:'meta-data', size:meta.length}, meta)
