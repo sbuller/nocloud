@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const FAT = require('nos-mkfat')
 const fs = require('fs')
 const tmp = require('tmp')
