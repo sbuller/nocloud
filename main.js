@@ -5,7 +5,6 @@ const tmp = require('tmp')
 const concat = require('concat-stream')
 const yaml = require('js-yaml')
 
-let fat = new FAT({name:'cidata'})
 let out = tmp.fileSync()
 
 process.stdin.pipe(concat(config=>{
@@ -14,6 +13,8 @@ process.stdin.pipe(concat(config=>{
 	let user = Buffer.from("#cloud-config\n" + yaml.safeDump(configObj.user || {}))
 	let meta = Buffer.from("#cloud-config\n" + yaml.safeDump(configObj.meta || {}))
 
+	let serial = configObj.serial?Buffer.from(configObj.serial):undefined
+	let fat = new FAT({name:'cidata', serial})
 	fat.entry({name:'user-data', size:user.length}, user)
 	fat.entry({name:'meta-data', size:meta.length}, meta)
 
